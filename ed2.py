@@ -6,7 +6,7 @@ from aStar import *
 from bestFirst import *
 from minCost import *
 
-def execucaoMaze(tamanho=30, possibilidadeCaminhos=100, algoritmo="bfs"):
+def execucaoMaze(tamanho=30, possibilidadeCaminhos=100, algoritmo="dfs"):
     
     goalX, goalY = randint(1,tamanho), 1
     
