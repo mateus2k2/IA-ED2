@@ -1,4 +1,8 @@
+import math
 import random
+
+def heuristica(node0, node1):
+    return math.sqrt((node0[0]-node1[0])**2 + (node0[1]-node1[1])**2)
 
 def aStar(labirinto):
     inicio = (labirinto.rows, labirinto.cols)
@@ -6,10 +10,13 @@ def aStar(labirinto):
     nosVisitados=[]
     fronteira.append(inicio)
     
-    bfsPath={}
+    custoAteAgora = 0
+    
+    a_star={}
 
     while fronteira !=[]:
-        vertice=fronteira.pop(0)
+        vertice=min(fronteira, key=lambda x: heuristica(x, labirinto._goal)+custoAteAgora)
+        fronteira.remove(vertice)
         nosVisitados.append(vertice)
 
         if vertice == labirinto._goal:
@@ -32,12 +39,15 @@ def aStar(labirinto):
                 
                 if vizinho not in nosVisitados and vizinho not in fronteira:
                     fronteira.append(vizinho)
-                    bfsPath[vizinho]=vertice
-                
+                    a_star[vizinho]=vertice
+        
+        print(custoAteAgora)
+        custoAteAgora += 1
+        
 
     fwdPath={}
     cell=labirinto._goal
     while cell != inicio:
-        fwdPath[bfsPath[cell]]=cell
-        cell=bfsPath[cell]
+        fwdPath[a_star[cell]]=cell
+        cell=a_star[cell]
     return fwdPath
